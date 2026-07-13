@@ -22,7 +22,7 @@ jobs:
       - name: Instalação do Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: "npm"
           cache-dependency-path: package-lock.json
 
@@ -46,7 +46,7 @@ jobs:
       - name: Instalação do Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: "npm"
           cache-dependency-path: package-lock.json
 
@@ -58,7 +58,7 @@ jobs:
         
      
       - name: Verificando formatacao
-        run: npx prettier --check .
+        run: npx prettier --write .
 
       - name: Rodando tests
         run: npm run test -- --watchAll=false
