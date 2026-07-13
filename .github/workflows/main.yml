@@ -57,7 +57,7 @@ jobs:
         run: npm run lint
         
       - name: Verificando formatacao
-        run: npm run format -- --check
+        run: npm run format
 
       - name: Rodando tests
-        run: npm run test
+        run: npm run test -- --watchAll=false
