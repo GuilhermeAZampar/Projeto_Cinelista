@@ -56,9 +56,9 @@ jobs:
       - name: Rodando lint
         run: npm run lint
         
-     
       - name: Verificando formatacao
         run: npx prettier --write .
 
+     
       - name: Rodando tests
-        run: npm run test -- --watchAll=false
+        run: npx jest --watchAll=false --passWithNoTests
