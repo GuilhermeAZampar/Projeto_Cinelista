@@ -36,6 +36,7 @@ jobs:
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
           NEXT_PUBLIC_TMDB_API_IMG_URL: ${{ vars.NEXT_PUBLIC_TMDB_API_IMG_URL }}
 
+  # Segundo job: test
   test:
     runs-on: ubuntu-latest
     needs: build
@@ -59,6 +60,29 @@ jobs:
       - name: Verificando formatacao
         run: npx prettier --write .
 
-     
       - name: Rodando tests
         run: npx jest --watchAll=false --passWithNoTests
+
+  # Terceiro job: deploy
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Instalação do Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+
+      - name: Instalação Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Deply para vercel
+        run: vercel --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
